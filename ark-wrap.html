@@ -16,6 +16,12 @@
 <body>
     <!--<div id="qr-reader" style="width:500px"></div>
     <div id="qr-reader-results"></div>-->
+    <div>
+        <img src="./qr_scan_enable.png" height="140" />
+        <img src="./qr-scan_icon.webp" width="140" />
+        <img src="./qr-scanning.gif" width="140" />
+    </div>
+    <br /><br />
     <div id="reader" width="100%"></div>
     <button id="btnStart">Start</button>
     <button id="btnStop">Stop</button>
@@ -26,10 +32,12 @@
             //ark_util.loadScript('https://unpkg.com/html5-qrcode', 'body');
             var scriptTag = document.createElement("script")
             scriptTag.onload = function () {
+                log.insertBefore(ark_util.textToDom(`<p>loaded the script</p>`), log.firstChild);
                 init();
             }
             scriptTag.src = 'https://unpkg.com/html5-qrcode';
             document.body.append(scriptTag);
+            log.insertBefore(ark_util.textToDom(`<p>width: ${width}, height: ${height}</p>`), log.firstChild);
         });
         var cameraId;
         var width = window.innerWidth * .9;
