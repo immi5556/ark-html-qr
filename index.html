@@ -1,0 +1,122 @@
+<html>
+<head>
+    <title>Html-Qrcode Demo  - (Immanuel : Developer)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="Immanuel developer, Html-Qrcode demo, open source contributor" />
+    <meta name="robots" content="index, follow" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="General" />
+    <meta name="identifier-url" content="https://www.immanuel.co" />
+    <meta name="Language" content="en, en-us, en-gb, en-bz, en-za" />
+    <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0" />
+    <link rel="shortcut icon" type="image/png" href="https://immanuel.co/favicon.ico" />
+    <script src="https://cdn.jsdelivr.net/npm/ark-js-util@1.2.2/ark-util.js"></script>
+    <script src="/html5-qrcode.min.js"></script>
+</head>
+<body>
+    <!--<div id="qr-reader" style="width:500px"></div>
+    <div id="qr-reader-results"></div>-->
+    <div id="reader" width="100%"></div>
+    <button id="btnStart">Start</button>
+    <button id="btnStop">Stop</button>
+    <script src="/html5-qrcode.min.js"></script>
+    <script>
+        var cameraId;
+        var width = window.innerWidth * .9;
+        var height = window.innerHeight * .8;
+        /*https://scanapp.org/html5-qrcode-docs/docs/intro*/
+        Html5Qrcode.getCameras().then(devices => {
+            console.log('camera', devices)
+            /**
+             * devices would be an array of objects of type:
+             * { id: "id", label: "label" }
+             */
+            if (devices && devices.length) {
+                cameraId = devices[0].id;
+                // .. use this to start scanning.
+            }
+        }).catch(err => {
+            console.log('camera error', err)
+        });
+        const html5QrCode = new Html5Qrcode(/* element id */ "reader");
+        document.getElementById("btnStart").addEventListener("click", e => {
+            html5QrCode.start(
+                cameraId,
+                {
+                    fps: 10,    // Optional, frame per seconds for qr code scanning
+                    qrbox: { width: width, height: height }  // Optional, if you want bounded box UI
+                },
+                (decodedText, decodedResult) => {
+                    // do something when code is read
+                    console.log('decoded ', decodedText, decodedResult)
+                },
+                (errorMessage) => {
+                    // parse error, ignore it.
+                    console.log('decoded error', errorMessage)
+                })
+                .catch((err) => {
+                    // Start failed, handle it.
+                    console.log('decoded exception', err)
+                });
+        });
+        document.getElementById("btnStop").addEventListener("click", e => {
+            html5QrCode.stop().then((ignore) => {
+                // QR Code scanning is stopped.
+                console.log('scanning stopped...')
+            }).catch((err) => {
+                // Stop failed, handle it.
+                console.log('scanning stopped error...')
+            });
+        })
+    </script>
+    <script>
+            //function docReady(fn) {
+            //    // see if DOM is already available
+            //    if (document.readyState === "complete"
+            //        || document.readyState === "interactive") {
+            //        // call on next available tick
+            //        setTimeout(fn, 1);
+            //    } else {
+            //        document.addEventListener("DOMContentLoaded", fn);
+            //    }
+            //}
+
+            //docReady(function () {
+            //    var resultContainer = document.getElementById('qr-reader-results');
+            //    var lastResult, countResults = 0;
+            //    function onScanSuccess(decodedText, decodedResult) {
+            //        if (decodedText !== lastResult) {
+            //            ++countResults;
+            //            lastResult = decodedText;
+            //            // Handle on success condition with the decoded message.
+            //            console.log(`Scan result ${decodedText}`, decodedResult);
+            //        }
+            //    }
+
+            //    var html5QrcodeScanner = new Html5QrcodeScanner(
+            //        "qr-reader", { fps: 10, qrbox: 250 });
+            //    html5QrcodeScanner.render(onScanSuccess);
+            //});
+    </script>
+    <script>
+            //const html5QrCode = new Html5Qrcode("reader");
+            //const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+        /* handle success */
+            //};
+            //const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+
+            // If you want to prefer front camera
+            //html5QrCode.start({ facingMode: "user" }, config, qrCodeSuccessCallback);
+
+            // If you want to prefer back camera
+            //html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+
+            // Select front camera or fail with `OverconstrainedError`.
+            //html5QrCode.start({ facingMode: { exact: "user" } }, config, qrCodeSuccessCallback);
+
+            // Select back camera or fail with `OverconstrainedError`.
+            //html5QrCode.start({ facingMode: { exact: "environment" } }, config, qrCodeSuccessCallback);
+            //html5QrCode.start({ deviceId: { exact: cameraId } }, config, qrCodeSuccessCallback);
+    </script>
+</body>
+</html>

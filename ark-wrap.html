@@ -1,0 +1,95 @@
+<html>
+<head>
+    <title>Html-Qrcode Demo  - (Immanuel : Developer)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="Immanuel developer, Html-Qrcode demo, open source contributor" />
+    <meta name="robots" content="index, follow" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="General" />
+    <meta name="identifier-url" content="https://www.immanuel.co" />
+    <meta name="Language" content="en, en-us, en-gb, en-bz, en-za" />
+    <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0" />
+    <link rel="shortcut icon" type="image/png" href="https://immanuel.co/favicon.ico" />
+    <script src="https://cdn.jsdelivr.net/npm/ark-js-util@1.2.2/ark-util.js"></script>
+    <!--<script src="/html5-qrcode.min.js"></script>-->
+</head>
+<body>
+    <!--<div id="qr-reader" style="width:500px"></div>
+    <div id="qr-reader-results"></div>-->
+    <div id="reader" width="100%"></div>
+    <button id="btnStart">Start</button>
+    <button id="btnStop">Stop</button>
+    <div id="log"></div>
+    <!--<script src="/html5-qrcode.min.js"></script>-->
+    <script>
+        document.addEventListener('DOMContentLoaded', e => {
+            //ark_util.loadScript('https://unpkg.com/html5-qrcode', 'body');
+            var scriptTag = document.createElement("script")
+            scriptTag.onload = function () {
+                init();
+            }
+            scriptTag.src = 'https://unpkg.com/html5-qrcode';
+            document.body.append(scriptTag);
+        });
+        var cameraId;
+        var width = window.innerWidth * .9;
+        var height = window.innerHeight * .8;
+        var html5QrCode;
+        var log = document.getElementById("log");
+        ///*https://scanapp.org/html5-qrcode-docs/docs/intro*/
+        const init = () => {
+            Html5Qrcode.getCameras().then(devices => {
+                console.log('camera', devices)
+                /**
+                 * devices would be an array of objects of type:
+                 * { id: "id", label: "label" }
+                 */
+                if (devices && devices.length) {
+                    cameraId = devices[0].id;
+                    // .. use this to start scanning.
+                }
+            }).catch(err => {
+                console.log('camera error', err);
+                log.insertBefore(ark_util.textToDom(`<p>camera error: ${JSON.stringify(err)}</p>`), log.firstChild);
+            });
+            html5QrCode = new Html5Qrcode("reader");
+        }
+        //const html5QrCode = new Html5Qrcode(/* element id */ "reader");
+        document.getElementById("btnStart").addEventListener("click", e => {
+            html5QrCode.start(
+                { facingMode: "environment" },
+                {
+                    fps: 10,    // Optional, frame per seconds for qr code scanning
+                    qrbox: { width: width, height: height }  // Optional, if you want bounded box UI
+                },
+                (decodedText, decodedResult) => {
+                    // do something when code is read
+                    console.log('decoded ', decodedText, decodedResult)
+                    log.insertBefore(ark_util.textToDom(`<p>decoded success: ${decodedText} ${JSON.stringify(decodedResult)}</p>`), log.firstChild);
+                },
+                (errorMessage) => {
+                    // parse error, ignore it.
+                    //console.log('decoded error', errorMessage);
+                    //log.append(ark_util.textToDom(`<p>decoded error: ${JSON.stringify(errorMessage)}</p>`));
+                })
+                .catch((err) => {
+                    // Start failed, handle it.
+                    console.log('decoded exception', err)
+                    //log.append(ark_util.textToDom(`<p>decoded exception: ${JSON.stringify(err)}</p>`));
+                    log.insertBefore(ark_util.textToDom(`<p>decoded exception: ${JSON.stringify(err)}</p>`), log.firstChild);
+                });
+        });
+        document.getElementById("btnStop").addEventListener("click", e => {
+            html5QrCode.stop().then((ignore) => {
+                // QR Code scanning is stopped.
+                console.log('scanning stopped...')
+                log.insertBefore(ark_util.textToDom(`<p>scanning stopped</p>`), log.firstChild);
+            }).catch((err) => {
+                // Stop failed, handle it.
+                console.log('scanning stopped error...')
+                log.insertBefore(ark_util.textToDom(`<p>scanning stopped error : ${JSON.stringify(err)}</p>`), log.firstChild);
+            });
+        })
+    </script>
+</body>
+</html>
