@@ -18,7 +18,7 @@ This is my convenient library extended from [html5-qrcode](https://github.com/me
         onerror: e => {
 
         }
-    })
+    }) 
 
 ### Screen shots
 ![Scanner Image](/img_1.PNG "Scanner Image with in dom")
