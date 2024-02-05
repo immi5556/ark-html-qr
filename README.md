@@ -4,6 +4,8 @@ This is my convenient library extended from [html5-qrcode](https://github.com/me
 [https://ark-html-qr.immanuel.co/](https://ark-html-qr.immanuel.co/)
 ### Install
     <script src="/dist/ark-html5code.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/ark-qr@latest/ark-html5code.js></script>
 ### Getting Started
 
     ark_qr({
