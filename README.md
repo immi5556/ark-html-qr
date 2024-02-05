@@ -23,6 +23,8 @@ This is my convenient library extended from [html5-qrcode](https://github.com/me
 ### Screen shots
 ![Scanner Image](/img_1.PNG "Scanner Image with in dom")
 
+![Scanning Image](/mob_ss.png "Ongoping scanner image")
+
 ### Features
 - [x] Custom camera Icon
 - [x] Mobile first
