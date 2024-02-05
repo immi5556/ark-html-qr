@@ -1,7 +1,7 @@
 # ark-html-qr
 This is my convenient library extended from [html5-qrcode](https://github.com/mebjas/html5-qrcode). for easy scanning and with better and easy UI (at least for me)
 ### Live Demo
-[https://ark-html-qr.immanuel.co/](https://ark-html-qr.immanuel.co/)
+[https://ark-html-qr.immanuel.co/ark-wrap.html](https://ark-html-qr.immanuel.co/ark-wrap.html)
 ### Install
     <script src="/dist/ark-html5code.js"></script>
 
