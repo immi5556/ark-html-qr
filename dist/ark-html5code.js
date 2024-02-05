@@ -154,8 +154,8 @@ const templ_qr_scan_btn = () => `<div class='ark-qr-img-scan' style='display:inl
                                  </div>`;
 const templ_qr_scanner = () => `<div class="scan-container" style='width:100%;height:100%;position:absolute;left: 0px; top: 0px; margin:0px;display:none;text-align:center;'>
                                     <div id="reader" ></div>
-                                    <img src='${qr_scanning_gif}' style='margin-top:-50px;position:fixed;' />
-                                    <span class='scan-cancel' style='margin-top:5px;position:fixed;cursor:pointer;font-weight:bolder;font-size:xxx-large;'>Cancel ...</span>
+                                    <img src='${qr_scanning_gif}' style='margin-top:-50px;position:fixed;left: 40%;' />
+                                    <span class='scan-cancel' style='margin-top:5px;position:fixed;cursor:pointer;font-weight:bolder;font-size:xxx-large;left: 40%;'>Cancel</span>
                                 </div>`;
 //const templ = () => `<div style='display:inline-block;'><img src='${qr_scanning_gif}' width='' /></div>`;
 
