@@ -6,7 +6,11 @@
  * @date    2024-05-01
  * this is the extended implementation of html5-qrcode, making it convinient (atleast for me)
  * used my own ark_util.js lib
- * 
+ *
+ * @version 1.0.2.1
+ * scan subscription, validation and fix.
+ * scanning position fix
+ *  
  * @copyright (c) 2015-2025 Immanuel R, https://www.immanuel.co
  *
  */
@@ -82,7 +86,7 @@ var ark_qr = (opt) => {
                 showScanner();
             });
         });
-        (opts.dom || document.body).insertAdjacentHTML('beforeend', templ_qr_scanner());
+        document.body.insertAdjacentHTML('beforeend', templ_qr_scanner());
         init();
         document.querySelectorAll('.scan-container span, .scan-container img').forEach(t => {
             t.addEventListener("click", e => {
@@ -173,8 +177,8 @@ const templ_qr_scan_btn = () => `<div class='ark-qr-img-scan' style='display:inl
                                  </div>`;
 const templ_qr_scanner = () => `<div class="scan-container" style='width:100%;height:100%;position:absolute;left: 0px; top: 0px; margin:0px;display:none;text-align:center;'>
                                     <div id="reader" ></div>
-                                    <img src='${qr_scanning_gif}' style='margin-top:-50px;position:fixed;left: 40%;' />
-                                    <span class='scan-cancel' style='margin-top:5px;position:fixed;cursor:pointer;font-weight:bolder;font-size:xxx-large;left: 40%;'>Cancel</span>
+                                    <img src='${qr_scanning_gif}' style='margin-top:0px;' />
+                                    <span class='scan-cancel' style='cursor:pointer;font-weight:bolder;font-size:xxx-large;margin-left:-155px;'>Cancel</span>
                                 </div>`;
 const templ_qr_log = () => `<div id="ark-hqlog" style='position:fixed; width: 100%; bottom: 10px; left: 0px;max-height: 150px;overflow: auto;'></div>`;
 
