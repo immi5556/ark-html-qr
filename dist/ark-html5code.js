@@ -117,6 +117,9 @@ var ark_qr = (opt) => {
         });
         html5QrCode = new Html5Qrcode("reader");
     }
+    function isFunction(functionToCheck) {
+        return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+    }
     const start = () => {
         html5QrCode.start(
             { facingMode: "environment" },
@@ -128,6 +131,7 @@ var ark_qr = (opt) => {
                 // do something when code is read
                 console.log('decoded ', decodedText, decodedResult)
                 log(`decoded success: ${decodedText} ${JSON.stringify(decodedResult)}`);
+                if (isFunction(opts.onscan)) opts.onscan({ ...decodedResult, text: decodedText });
             },
             (errorMessage) => {
                 // parse error, ignore it.
@@ -135,8 +139,9 @@ var ark_qr = (opt) => {
                 if (errorMessage.indexOf('No MultiFormat Readers were able to detect the code') == -1 && errorMessage.indexOf('No barcode or QR code detected') == -1) {
                     console.log(errorMessage.indexOf('No MultiFormat Readers were able to detect the code, No barcode or QR code detected'));
                     log(`decoded error: ${errorMessage}`);
+                    if (isFunction(opts.onscan)) opts.onscan(errorMessage);
                 } else {
-                    console.log(errorMessage.indexOf('No MultiFormat Readers were able to detect the code'), errorMessage.indexOf('No barcode or QR code detected'));
+                    //console.log(errorMessage.indexOf('No MultiFormat Readers were able to detect the code'), errorMessage.indexOf('No barcode or QR code detected'));
                 }
             })
             .catch((err) => {
