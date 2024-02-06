@@ -7,7 +7,7 @@
  * this is the extended implementation of html5-qrcode, making it convinient (atleast for me)
  * used my own ark_util.js lib
  *
- * @version 1.0.2.1
+ * @version 1.0.3
  * scan subscription, validation and fix.
  * scanning position fix
  *  
