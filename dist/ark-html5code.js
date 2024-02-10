@@ -143,7 +143,7 @@ var ark_qr = (opt) => {
                 if (errorMessage.indexOf('No MultiFormat Readers were able to detect the code') == -1 && errorMessage.indexOf('No barcode or QR code detected') == -1) {
                     console.log(errorMessage.indexOf('No MultiFormat Readers were able to detect the code, No barcode or QR code detected'));
                     log(`decoded error: ${errorMessage}`);
-                    if (isFunction(opts.onscan)) opts.onscan(errorMessage);
+                    if (isFunction(opts.onerror)) opts.onerror(errorMessage);
                 } else {
                     //console.log(errorMessage.indexOf('No MultiFormat Readers were able to detect the code'), errorMessage.indexOf('No barcode or QR code detected'));
                 }
@@ -153,6 +153,7 @@ var ark_qr = (opt) => {
                 console.log('decoded exception', err)
                 //log.append(ark_util.textToDom(`<p>decoded exception: ${JSON.stringify(err)}</p>`));
                 log(`decoded exception: ${JSON.stringify(err)}`);
+                if (isFunction(opts.onerror)) opts.onerror(errorMessage);
             });
     }
     const stop = () => {
@@ -164,6 +165,7 @@ var ark_qr = (opt) => {
             // Stop failed, handle it.
             console.log('scanning stopped error...')
             log(`scanning stopped error : ${JSON.stringify(err)}`);
+            if (isFunction(opts.onerror)) opts.onerror(err);
         });
     }
     return {
